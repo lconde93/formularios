@@ -28,7 +28,7 @@ export class DataComponent implements OnInit {
 			'pasatiempos': new FormArray([
 				new FormControl('correr', Validators.required)
 			]),
-			'username': new FormControl('', Validators.required),
+			'username': new FormControl('', Validators.required, this.validarUsuario),
 			'password1': new FormControl('', Validators.required),
 			'password2': new FormControl()
 		});
@@ -38,6 +38,11 @@ export class DataComponent implements OnInit {
 			Validators.required,
 			this.validarContrasena
 		]);
+
+		this.forma.controls['username'].valueChanges
+		.subscribe(data => {
+			console.log(data);
+		});
 
 	}
 
@@ -81,7 +86,7 @@ export class DataComponent implements OnInit {
 		return null;
 	}
 
-	validarUsuario(control: FormControl): Promise<any | Observable <any> {
+	validarUsuario(control: FormControl): Promise<any> | Observable <any> {
 		let promesa = new Promise((resolve, reject) => {
 			setTimeout(() => {
 				if(control.value === 'strider') {
